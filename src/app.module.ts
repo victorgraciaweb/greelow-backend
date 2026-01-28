@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommonModule } from './common/common.module';
 import { AuthModule } from './auth/auth.module';
 import { EnvConfiguration } from './config/app.config';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { EnvConfiguration } from './config/app.config';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    SeedModule,
     AuthModule,
     CommonModule,
   ],
