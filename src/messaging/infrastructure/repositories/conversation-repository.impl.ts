@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Conversation } from '../../domain/entities/conversation.entity';
 import { Message } from '../../domain/entities/message.entity';
 import { ConversationRepository } from '../../domain/ports/conversation-repository.port';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Injectable()
 export class ConversationRepositoryImpl implements ConversationRepository {
@@ -33,8 +34,11 @@ export class ConversationRepositoryImpl implements ConversationRepository {
     });
   }
 
-  async listAll(): Promise<Conversation[]> {
-    return this.conversationRepository.find();
+  async listAll(pagination?: PaginationDto): Promise<Conversation[]> {
+    return this.conversationRepository.find({
+      skip: pagination?.offset,
+      take: pagination?.limit,
+    });
   }
 
   async listByUserId(userId: string): Promise<Conversation[]> {

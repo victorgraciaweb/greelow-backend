@@ -1,3 +1,4 @@
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { Conversation } from '../entities/conversation.entity';
 import { Message } from '../entities/message.entity';
 
@@ -20,7 +21,7 @@ export interface ConversationRepository {
    * Lists all conversations in the system.
    * @returns A promise that resolves to an array of all Conversations.
    */
-  listAll(): Promise<Conversation[]>;
+  listAll(pagination?: PaginationDto): Promise<Conversation[]>;
 
   /**
    * Lists all conversations associated with a specific user ID.

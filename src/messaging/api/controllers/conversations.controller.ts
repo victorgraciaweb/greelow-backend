@@ -5,12 +5,14 @@ import {
   Body,
   Param,
   ParseUUIDPipe,
+  Query,
 } from '@nestjs/common';
 
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import { User } from 'src/auth/entities/user.entity';
 import { ValidRoles } from 'src/auth/enums';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { SendMessageDto } from 'src/messaging/application/dto/send-message.dto';
 
 import { ListConversationsUseCase } from 'src/messaging/application/use-cases/list-conversations.usecase';
@@ -60,8 +62,9 @@ export class ConversationsController {
   @Auth(ValidRoles.ADMIN, ValidRoles.MEMBER)
   async listConversations(
     @GetUser() currentUser: User,
+    @Query() paginationDto: PaginationDto,
   ): Promise<Conversation[]> {
-    return this.listConversationsUseCase.execute(currentUser);
+    return this.listConversationsUseCase.execute(currentUser, paginationDto);
   }
 
   /**
