@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Conversation } from '../../domain/entities/conversation.entity';
-import { Message } from '../../domain/entities/message.entity';
-import { ConversationRepository } from '../../domain/ports/conversation-repository.port';
+
+import { Conversation } from 'src/messaging/domain/entities/conversation.entity';
+import { Message } from 'src/messaging/domain/entities/message.entity';
+import { ConversationRepository } from 'src/messaging/domain/ports/conversation-repository.port';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Injectable()

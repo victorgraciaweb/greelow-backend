@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { TelegramGateway } from '../../domain/ports/telegram-gateway.port';
+
+import { TelegramGateway } from 'src/messaging/domain/ports/telegram-gateway.port';
 import { TelegramMessage } from 'src/messaging/application/dto/telegram-message.dto';
 import { ConfigService } from '@nestjs/config';
 
