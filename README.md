@@ -65,6 +65,13 @@ Make sure to replace <PORT> with the actual port defined in your .env file (e.g.
 
 Swagger provides a convenient interface to view all available routes and schemas.
 
+## Postman Collection
+
+A Postman collection is provided to test the API endpoints.  
+You can import it into Postman from:
+
+`docs/postman/Greelow.postman_collection.json`
+
 ## Running tests
 
 Run the tests using the following commands:
