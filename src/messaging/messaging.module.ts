@@ -12,9 +12,14 @@ import { Conversation } from './domain/entities/conversation.entity';
 import { Message } from './domain/entities/message.entity';
 import { CONVERSATION_REPOSITORY } from './domain/ports/conversation-repository.token';
 import { TELEGRAM_GATEWAY } from './domain/ports/telegram-gateway.token';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [AuthModule, TypeOrmModule.forFeature([Conversation, Message])],
+  imports: [
+    AuthModule,
+    ConfigModule,
+    TypeOrmModule.forFeature([Conversation, Message]),
+  ],
   controllers: [ConversationsController],
   providers: [
     ListConversationsUseCase,

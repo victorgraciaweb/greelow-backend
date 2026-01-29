@@ -7,8 +7,21 @@ export interface SeedUser {
   roles: ValidRoles[];
 }
 
+export interface SeedConversation {
+  userEmail: string;
+  chatId: string;
+}
+
+export interface SeedMessage {
+  chatId: string;
+  text: string;
+  type: 'incoming' | 'outgoing';
+}
+
 export interface SeedData {
   users: SeedUser[];
+  conversations: SeedConversation[];
+  messages: SeedMessage[];
 }
 
 export const initialData: SeedData = {
@@ -24,6 +37,35 @@ export const initialData: SeedData = {
       fullName: 'Member User',
       password: '1234ABCabc',
       roles: [ValidRoles.MEMBER],
+    },
+  ],
+
+  conversations: [
+    {
+      userEmail: 'admin@gmail.com',
+      chatId: '1613296396',
+    },
+    {
+      userEmail: 'member@gmail.com',
+      chatId: '6666666666',
+    },
+  ],
+
+  messages: [
+    {
+      chatId: '1613296396',
+      text: 'Hola admin 👋',
+      type: 'incoming',
+    },
+    {
+      chatId: '1613296396',
+      text: 'Hola! ¿en qué puedo ayudarte?',
+      type: 'outgoing',
+    },
+    {
+      chatId: '1613296396',
+      text: 'Hola member 👋',
+      type: 'incoming',
     },
   ],
 };

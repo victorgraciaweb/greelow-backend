@@ -10,4 +10,7 @@ export const EnvConfiguration = () => ({
   routeSwagger: process.env.ROUTE_SWAGGER || 'docs',
 
   jwtSecret: process.env.JWT_SECRET,
+
+  telegramBotToken: process.env.TELEGRAM_BOT_TOKEN,
+  telegramBaseUrl: process.env.TELEGRAM_BASE_URL,
 });
