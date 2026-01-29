@@ -72,11 +72,11 @@ You can import it into Postman from:
 
 `docs/postman/Greelow.postman_collection.json`
 
-## Running tests
+## Running tests (unit and integration)
 
 Run the tests using the following commands:
 
-- Run tests normally:
+- Run all tests (unit and integration) with:
 
 ```
 yarn test
