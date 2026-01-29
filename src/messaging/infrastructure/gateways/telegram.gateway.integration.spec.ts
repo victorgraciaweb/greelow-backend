@@ -12,6 +12,10 @@ const mockedAxios = axios as jest.Mocked<typeof axios>;
 describe('TelegramGatewayImpl - Integration', () => {
   let gateway: TelegramGatewayImpl;
 
+  beforeAll(() => {
+    jest.spyOn(console, 'log').mockImplementation(() => {});
+  });
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
