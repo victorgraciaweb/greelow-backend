@@ -103,7 +103,6 @@ export class AuthController {
       statusCode: 401,
     },
   })
-  @ApiResponse({ status: 401, description: 'Unauthorized / invalid token' })
   refreshToken(@GetUser() user: User): Promise<AuthResponseDto> {
     return this.authService.refresh(user);
   }
