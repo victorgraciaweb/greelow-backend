@@ -15,6 +15,7 @@ import { SendMessageDto } from 'src/messaging/application/dto/send-message.dto';
 
 import { ListConversationsUseCase } from 'src/messaging/application/use-cases/list-conversations.usecase';
 import { ListMessagesUseCase } from 'src/messaging/application/use-cases/list-messages.usecase';
+import { ProcessTelegramMessageUseCase } from 'src/messaging/application/use-cases/process-telegram-message.usecase';
 import { SendMessageUseCase } from 'src/messaging/application/use-cases/send-message.usecase';
 import { Conversation } from 'src/messaging/domain/entities/conversation.entity';
 
@@ -39,6 +40,7 @@ export class ConversationsController {
     private readonly listConversationsUseCase: ListConversationsUseCase,
     private readonly listMessagesUseCase: ListMessagesUseCase,
     private readonly sendMessageUseCase: SendMessageUseCase,
+    private readonly processTelegramMessageUseCase: ProcessTelegramMessageUseCase,
   ) {}
 
   /**
@@ -114,5 +116,27 @@ export class ConversationsController {
       },
       currentUser,
     );
+  }
+
+  //TODO: remove this temporary endpoint after testing
+  /**
+   * POST /conversations/telegram/process
+   *
+   * ⚠️ TEMPORARY endpoint for manual testing only
+   * This endpoint triggers Telegram polling and message processing.
+   *
+   * Notes:
+   * - This endpoint MUST NOT exist in production
+   * - It is intended only for local development and QA
+   */
+  @Post('telegram/process')
+  @Auth(ValidRoles.ADMIN)
+  async processTelegramMessages() {
+    await this.processTelegramMessageUseCase.execute();
+
+    return {
+      ok: true,
+      message: 'Telegram messages processed successfully',
+    };
   }
 }

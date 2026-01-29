@@ -1,39 +1,43 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConversationRepository } from '../../domain/ports/conversation-repository.port';
 import { TelegramGateway } from '../../domain/ports/telegram-gateway.port';
+import { TELEGRAM_GATEWAY } from 'src/messaging/domain/ports/telegram-gateway.token';
+import { CONVERSATION_REPOSITORY } from 'src/messaging/domain/ports/conversation-repository.token';
 
 @Injectable()
 export class ProcessTelegramMessageUseCase {
-  constructor() {
-    //private readonly conversationRepo: ConversationRepository,
-    //private readonly telegramGateway: TelegramGateway,
-  }
+  constructor(
+    @Inject(CONVERSATION_REPOSITORY)
+    private readonly conversationRepository: ConversationRepository,
 
-  /*async execute(): Promise<void> {
+    @Inject(TELEGRAM_GATEWAY)
+    private readonly telegramGateway: TelegramGateway,
+  ) {}
+
+  async execute(): Promise<void> {
     // 1️⃣ Obtener mensajes nuevos de Telegram
     const updates = await this.telegramGateway.getUpdates();
 
     for (const update of updates) {
-      // 2️⃣ Obtener o crear conversación
-      const conversation = await this.conversationRepo.findOrCreate(
+      // Process each update
+      const conversation = await this.conversationRepository.findOrCreate(
         update.chatId,
       );
 
-      // 3️⃣ Guardar mensaje entrante
-      await this.conversationRepo.addMessage(
+      // Save message to conversation
+      await this.conversationRepository.addMessage(
         conversation.id,
         update.text,
         'incoming',
       );
 
-      // 4️⃣ Generar respuesta aleatoria
+      // Generate a simple reply
       const reply = this.getRandomReply();
 
-      // 5️⃣ Enviar respuesta vía Telegram
+      // Send message back via Telegram
       await this.telegramGateway.sendMessage(update.chatId, reply);
     }
-  }*/
-  async execute(): Promise<void> {}
+  }
 
   private getRandomReply(): string {
     const responses = [

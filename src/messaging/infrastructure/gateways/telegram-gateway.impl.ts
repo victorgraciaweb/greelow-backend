@@ -18,6 +18,8 @@ export class TelegramGatewayImpl implements TelegramGateway {
     const res = await axios.get(`${this.baseUrl}${this.token}/getUpdates`);
     const updates = res.data.result || [];
 
+    console.log('Received Telegram updates:', updates);
+
     // Map the updates to TelegramMessage DTOs
     return updates.map((u: any) => ({
       chatId: u.message.chat.id.toString(),
