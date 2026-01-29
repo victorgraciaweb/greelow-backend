@@ -8,6 +8,7 @@ import { ConfigService } from '@nestjs/config';
 export class TelegramGatewayImpl implements TelegramGateway {
   private readonly token: string;
   private readonly baseUrl: string;
+  private lastUpdateId: number = 0;
 
   constructor(private readonly configService: ConfigService) {
     this.token = this.configService.get<string>('telegramBotToken');
@@ -15,16 +16,29 @@ export class TelegramGatewayImpl implements TelegramGateway {
   }
 
   async getUpdates(): Promise<TelegramMessage[]> {
-    const res = await axios.get(`${this.baseUrl}${this.token}/getUpdates`);
+    const res = await axios.get(`${this.baseUrl}${this.token}/getUpdates`, {
+      params: {
+        offset: this.lastUpdateId + 1, // Just get new updates
+        timeout: 0, // Optional: long polling
+      },
+    });
+
     const updates = res.data.result || [];
 
-    console.log('Received Telegram updates:', updates);
+    if (updates.length > 0) {
+      this.lastUpdateId = updates[updates.length - 1].update_id;
+    }
 
-    // Map the updates to TelegramMessage DTOs
-    return updates.map((u: any) => ({
+    const messages: TelegramMessage[] = updates.map((u: any) => ({
       chatId: u.message.chat.id.toString(),
       text: u.message.text,
     }));
+
+    if (messages.length > 0) {
+      console.log('📨 Messages received from Telegram:', messages);
+    }
+
+    return messages;
   }
 
   async sendMessage(chatId: string, text: string) {
@@ -40,13 +54,13 @@ export class TelegramGatewayImpl implements TelegramGateway {
       console.log(`Message sent to chatId ${chatId}: ${text}`);
       console.log('Telegram response:', response.data);
 
-      return response.data; // opcional, si quieres que tu use case reciba info
+      return response.data;
     } catch (error) {
       console.error(
         'Error sending Telegram message:',
         error.response?.data || error.message,
       );
-      throw error; // re-lanzar para que el use case lo capture si quieres manejarlo
+      throw error;
     }
   }
 }

@@ -13,6 +13,7 @@ import { Message } from './domain/entities/message.entity';
 import { CONVERSATION_REPOSITORY } from './domain/ports/conversation-repository.token';
 import { TELEGRAM_GATEWAY } from './domain/ports/telegram-gateway.token';
 import { ConfigModule } from '@nestjs/config';
+import { TelegramPollingService } from './infrastructure/schedulers/telegram-polling.service';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ConfigModule } from '@nestjs/config';
   ],
   controllers: [ConversationsController],
   providers: [
+    TelegramPollingService,
     ListConversationsUseCase,
     ListMessagesUseCase,
     SendMessageUseCase,

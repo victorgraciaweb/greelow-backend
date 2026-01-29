@@ -6,9 +6,11 @@ import { AuthModule } from './auth/auth.module';
 import { EnvConfiguration } from './config/app.config';
 import { SeedModule } from './seed/seed.module';
 import { MessagingModule } from './messaging/messaging.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       load: [EnvConfiguration],
     }),

@@ -117,26 +117,4 @@ export class ConversationsController {
       currentUser,
     );
   }
-
-  //TODO: remove this temporary endpoint after testing
-  /**
-   * POST /conversations/telegram/process
-   *
-   * ⚠️ TEMPORARY endpoint for manual testing only
-   * This endpoint triggers Telegram polling and message processing.
-   *
-   * Notes:
-   * - This endpoint MUST NOT exist in production
-   * - It is intended only for local development and QA
-   */
-  @Post('telegram/process')
-  @Auth(ValidRoles.ADMIN)
-  async processTelegramMessages() {
-    await this.processTelegramMessageUseCase.execute();
-
-    return {
-      ok: true,
-      message: 'Telegram messages processed successfully',
-    };
-  }
 }

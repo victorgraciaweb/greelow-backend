@@ -15,7 +15,7 @@ export class ProcessTelegramMessageUseCase {
   ) {}
 
   async execute(): Promise<void> {
-    // 1️⃣ Obtener mensajes nuevos de Telegram
+    // Fetch updates from Telegram
     const updates = await this.telegramGateway.getUpdates();
 
     for (const update of updates) {
@@ -36,6 +36,13 @@ export class ProcessTelegramMessageUseCase {
 
       // Send message back via Telegram
       await this.telegramGateway.sendMessage(update.chatId, reply);
+
+      // Save reply to conversation
+      await this.conversationRepository.addMessage(
+        conversation.id,
+        reply,
+        'outgoing',
+      );
     }
   }
 
