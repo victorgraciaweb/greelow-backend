@@ -14,11 +14,14 @@ import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import { User } from 'src/auth/entities/user.entity';
 import { ValidRoles } from 'src/auth/enums';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { ConversationResponseDto } from 'src/messaging/application/dto/conversation-response.dto';
+import { MessageResponseDto } from 'src/messaging/application/dto/message-response.dto';
 import { SendMessageDto } from 'src/messaging/application/dto/send-message.dto';
+import { ConversationMapper } from 'src/messaging/application/mappers/conversation.mapper';
+import { MessageMapper } from 'src/messaging/application/mappers/message.mapper';
 
 import { ListConversationsUseCase } from 'src/messaging/application/use-cases/list-conversations.usecase';
 import { ListMessagesUseCase } from 'src/messaging/application/use-cases/list-messages.usecase';
-import { ProcessTelegramMessageUseCase } from 'src/messaging/application/use-cases/process-telegram-message.usecase';
 import { SendMessageUseCase } from 'src/messaging/application/use-cases/send-message.usecase';
 import { Conversation } from 'src/messaging/domain/entities/conversation.entity';
 import { Message } from 'src/messaging/domain/entities/message.entity';
@@ -44,7 +47,6 @@ export class ConversationsController {
     private readonly listConversationsUseCase: ListConversationsUseCase,
     private readonly listMessagesUseCase: ListMessagesUseCase,
     private readonly sendMessageUseCase: SendMessageUseCase,
-    private readonly processTelegramMessageUseCase: ProcessTelegramMessageUseCase,
   ) {}
 
   /**
@@ -82,8 +84,13 @@ export class ConversationsController {
   async listConversations(
     @GetUser() currentUser: User,
     @Query() paginationDto: PaginationDto,
-  ): Promise<Conversation[]> {
-    return this.listConversationsUseCase.execute(currentUser, paginationDto);
+  ): Promise<ConversationResponseDto[]> {
+    const conversations = await this.listConversationsUseCase.execute(
+      currentUser,
+      paginationDto,
+    );
+
+    return ConversationMapper.toDtos(conversations);
   }
 
   /**
@@ -121,11 +128,13 @@ export class ConversationsController {
   async listMessages(
     @Param('id', ParseUUIDPipe) conversationId: string,
     @GetUser() currentUser: User,
-  ): Promise<Conversation['messages']> {
-    return this.listMessagesUseCase.execute({
+  ): Promise<MessageResponseDto[]> {
+    const messages = await this.listMessagesUseCase.execute({
       conversationId,
       currentUser,
     });
+
+    return MessageMapper.toDtos(messages);
   }
 
   /**
@@ -192,13 +201,12 @@ export class ConversationsController {
     @Param('id', ParseUUIDPipe) conversationId: string,
     @Body() dto: SendMessageDto,
     @GetUser() currentUser: User,
-  ) {
-    return this.sendMessageUseCase.execute(
-      {
-        conversationId,
-        content: dto.content,
-      },
+  ): Promise<MessageResponseDto> {
+    const message = await this.sendMessageUseCase.execute(
+      { conversationId, content: dto.content },
       currentUser,
     );
+
+    return MessageMapper.toDto(message);
   }
 }
