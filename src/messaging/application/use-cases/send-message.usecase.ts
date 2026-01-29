@@ -10,7 +10,8 @@ import { ConversationRepository } from 'src/messaging/domain/ports/conversation-
 import { CONVERSATION_REPOSITORY } from 'src/messaging/domain/ports/conversation-repository.token';
 import { TelegramGateway } from 'src/messaging/domain/ports/telegram-gateway.port';
 import { TELEGRAM_GATEWAY } from 'src/messaging/domain/ports/telegram-gateway.token';
-import { SendMessageDto } from '../dto/send-message.dto';
+import { User } from 'src/auth/entities/user.entity';
+import { Message } from '../../domain/entities/message.entity';
 
 @Injectable()
 export class SendMessageUseCase {
@@ -22,7 +23,12 @@ export class SendMessageUseCase {
     private readonly telegramGateway: TelegramGateway,
   ) {}
 
-  async execute({ conversationId, content, currentUser }: SendMessageDto) {
+  async execute(
+    dto: { conversationId: string; content: string },
+    currentUser: User,
+  ) {
+    const { conversationId, content } = dto;
+
     const conversation =
       await this.conversationRepository.findById(conversationId);
     if (!conversation) throw new NotFoundException('Conversation not found');
@@ -34,7 +40,7 @@ export class SendMessageUseCase {
       throw new ForbiddenException('Access denied');
     }
 
-    const message = await this.conversationRepository.addMessage(
+    const message: Message = await this.conversationRepository.addMessage(
       conversationId,
       content,
       'outgoing',

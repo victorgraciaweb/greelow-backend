@@ -11,6 +11,7 @@ import { Auth } from 'src/auth/decorators/auth.decorator';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import { User } from 'src/auth/entities/user.entity';
 import { ValidRoles } from 'src/auth/enums';
+import { SendMessageDto } from 'src/messaging/application/dto/send-message.dto';
 
 import { ListConversationsUseCase } from 'src/messaging/application/use-cases/list-conversations.usecase';
 import { ListMessagesUseCase } from 'src/messaging/application/use-cases/list-messages.usecase';
@@ -103,13 +104,15 @@ export class ConversationsController {
   @Auth(ValidRoles.ADMIN, ValidRoles.MEMBER)
   async sendMessage(
     @Param('id', ParseUUIDPipe) conversationId: string,
-    @Body('content') content: string,
+    @Body() dto: SendMessageDto,
     @GetUser() currentUser: User,
   ) {
-    return this.sendMessageUseCase.execute({
-      conversationId,
-      content,
+    return this.sendMessageUseCase.execute(
+      {
+        conversationId,
+        content: dto.content,
+      },
       currentUser,
-    });
+    );
   }
 }

@@ -47,7 +47,7 @@ export class ConversationRepositoryImpl implements ConversationRepository {
     conversationId: string,
     text: string,
     type: 'incoming' | 'outgoing',
-  ) {
+  ): Promise<Message> {
     const message = this.messageRepository.create({
       conversation: { id: conversationId },
       text,

@@ -1,7 +1,7 @@
-import { User } from 'src/auth/entities/user.entity';
+import { IsNotEmpty, IsString } from 'class-validator';
 
-export interface SendMessageDto {
-  conversationId: string;
+export class SendMessageDto {
+  @IsString()
+  @IsNotEmpty()
   content: string;
-  currentUser: User;
 }
