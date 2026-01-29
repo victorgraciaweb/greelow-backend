@@ -5,13 +5,13 @@ import {
   Inject,
 } from '@nestjs/common';
 
-import { ValidRoles } from 'src/auth/enums';
+import { ValidRoles } from 'src/auth/enums/valid-roles.enum';
 import { ConversationRepository } from 'src/messaging/domain/ports/conversation-repository.port';
 import { CONVERSATION_REPOSITORY } from 'src/messaging/domain/ports/conversation-repository.token';
 import { TelegramGateway } from 'src/messaging/domain/ports/telegram-gateway.port';
 import { TELEGRAM_GATEWAY } from 'src/messaging/domain/ports/telegram-gateway.token';
 import { User } from 'src/auth/entities/user.entity';
-import { Message } from '../../domain/entities/message.entity';
+import { Message } from 'src/messaging/domain/entities/message.entity';
 
 @Injectable()
 export class SendMessageUseCase {

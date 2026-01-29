@@ -4,11 +4,12 @@ import {
   NotFoundException,
   Inject,
 } from '@nestjs/common';
-import { ValidRoles } from 'src/auth/enums';
+
+import { ValidRoles } from 'src/auth/enums/valid-roles.enum';
 import { Conversation } from 'src/messaging/domain/entities/conversation.entity';
 import { ConversationRepository } from 'src/messaging/domain/ports/conversation-repository.port';
 import { CONVERSATION_REPOSITORY } from 'src/messaging/domain/ports/conversation-repository.token';
-import { ListMessagesDto } from '../dto/list-messages.dto';
+import { ListMessagesDto } from 'src/messaging/application/dto/list-messages.dto';
 
 @Injectable()
 export class ListMessagesUseCase {

@@ -23,8 +23,6 @@ import { MessageMapper } from 'src/messaging/application/mappers/message.mapper'
 import { ListConversationsUseCase } from 'src/messaging/application/use-cases/list-conversations.usecase';
 import { ListMessagesUseCase } from 'src/messaging/application/use-cases/list-messages.usecase';
 import { SendMessageUseCase } from 'src/messaging/application/use-cases/send-message.usecase';
-import { Conversation } from 'src/messaging/domain/entities/conversation.entity';
-import { Message } from 'src/messaging/domain/entities/message.entity';
 
 /**
  * ConversationsController

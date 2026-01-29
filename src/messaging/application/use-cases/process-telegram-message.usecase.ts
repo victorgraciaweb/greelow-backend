@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ConversationRepository } from '../../domain/ports/conversation-repository.port';
-import { TelegramGateway } from '../../domain/ports/telegram-gateway.port';
+
+import { ConversationRepository } from 'src/messaging/domain/ports/conversation-repository.port';
+import { TelegramGateway } from 'src/messaging/domain/ports/telegram-gateway.port';
 import { TELEGRAM_GATEWAY } from 'src/messaging/domain/ports/telegram-gateway.token';
 import { CONVERSATION_REPOSITORY } from 'src/messaging/domain/ports/conversation-repository.token';
 

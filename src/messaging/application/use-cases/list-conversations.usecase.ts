@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { User } from 'src/auth/entities/user.entity';
-import { ValidRoles } from 'src/auth/enums';
+import { ValidRoles } from 'src/auth/enums/valid-roles.enum';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { Conversation } from 'src/messaging/domain/entities/conversation.entity';
 import { ConversationRepository } from 'src/messaging/domain/ports/conversation-repository.port';
