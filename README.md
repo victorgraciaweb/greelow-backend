@@ -19,6 +19,9 @@ cp .env.template .env
 
 2. After copying the template, update the `.env` file with the required environment variables.
 
+- JWT_SECRET
+- TELEGRAM_BOT_TOKEN (You can create a new bot and get the token from BotFather on Telegram: https://t.me/BotFather)
+
 3. Install the project dependencies using Yarn:
 
 ```
