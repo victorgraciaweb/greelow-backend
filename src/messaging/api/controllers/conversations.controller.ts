@@ -71,7 +71,8 @@ export class ConversationsController {
   @ApiResponse({
     status: 200,
     description: 'List of conversations returned successfully',
-    type: [Conversation],
+    type: ConversationResponseDto,
+    isArray: true,
   })
   @ApiResponse({
     status: 401,
@@ -115,7 +116,8 @@ export class ConversationsController {
   @ApiResponse({
     status: 200,
     description: 'List of messages returned successfully',
-    type: [Conversation],
+    type: MessageResponseDto,
+    isArray: true,
   })
   @ApiResponse({
     status: 401,
@@ -159,7 +161,7 @@ export class ConversationsController {
   @ApiResponse({
     status: 200,
     description: 'Message sent successfully',
-    type: Message,
+    type: MessageResponseDto,
   })
   @ApiResponse({
     status: 400,
