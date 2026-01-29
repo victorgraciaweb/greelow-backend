@@ -5,6 +5,7 @@ import { CommonModule } from './common/common.module';
 import { AuthModule } from './auth/auth.module';
 import { EnvConfiguration } from './config/app.config';
 import { SeedModule } from './seed/seed.module';
+import { MessagingModule } from './messaging/messaging.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { SeedModule } from './seed/seed.module';
     SeedModule,
     AuthModule,
     CommonModule,
+    MessagingModule,
   ],
   controllers: [],
   providers: [],

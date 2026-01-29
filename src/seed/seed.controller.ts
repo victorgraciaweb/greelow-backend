@@ -26,6 +26,8 @@ export class SeedController {
       ok: true,
       message: 'Database seeded successfully',
       usersInserted: 3,
+      conversationsInserted: 5,
+      messagesInserted: 12,
     },
   })
   executeSeed() {
